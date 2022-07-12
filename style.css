@@ -1,4 +1,3 @@
-
 body {
   font-family: Georgia, Times, serif;
   letter-spacing: 1pt;
@@ -6,10 +5,7 @@ body {
   position: relative;
   margin: 0;
   height: 100vh;
-  
 }
-
-
 
 .title-section {
   display: flex;
@@ -25,30 +21,50 @@ body {
 }
 
 .logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 29px;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
 }
 
-.main-title{
-    margin: 0;
+.main-title {
+  margin: 0;
 }
+
 section {
-    align-items: center;
-    background-image: linear-gradient(90deg, #dddddd 67%, white  ) ;
+  display: block;
+  align-items: center;
+  color: #777777;
+  margin: 10px 8px;
+  padding: 2px 8px;
+}
 
-    color: #777777;
-    margin: 10px 8px ;
-    padding: 2px 8px;
-    height: 40px;
-  }
+.pending-title,
+.completed-title {
+  background-image: linear-gradient(90deg, #dddddd 67%, white);
+  margin: 0;
+  padding: 10px 5px;
+}
+
+.to-scroll {
+  margin: 0;
+  height: 120px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.listItemEl {
+  font-size: small;
+  margin-bottom: 2px;
+  text-decoration: rgb(37, 123, 110);
+  text-decoration-line: underline;
+}
 
 .new-booking-form {
   display: flex;
   flex-direction: column;
   gap: 5px;
   position: absolute;
-  bottom: 10px;
+  bottom: 0;
   margin-left: 6px;
   padding: 15px;
   background-color: #dddddd;
@@ -85,6 +101,8 @@ input {
   width: 100px;
 }
 
-/* @media only screen and (min-width: 768px) {
-
-} */
+@media only screen and (min-width: 768px) {
+  .to-scroll {
+    height: 150px;
+  }
+}

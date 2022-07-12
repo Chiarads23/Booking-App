@@ -1,26 +1,33 @@
-// Descrizione
-// Il cliente ci ha richiesto una piccola web app, per separare in due blocchi, le prenotazioni già “completed” da quelle non completate (completed === false).
-// {
-//     "userId": 1,
-//     "id": 1,
-//     "title": "delectus aut autem", 
-//     "completed": false} 
+// ● Bisognerebbe aggiungere un piccolo form dove poter inserire una nuova prenotazione. I campi di questo form saranno gli stessi che vengono restituiti da ogni singolo oggetto contenuto nell’array restituito dalla chiamata a “todos”
 
+const newEl = (el) => document.createElement(el);
 
-// Linee guida
-// Endpoint che restituisce degli appuntamenti di test:
-// https://jsonplaceholder.typicode.com/todos
+const q = (el) => document.querySelector(el);
 
-// Consiglio: Le prenotazioni (oggetti dell’array) che riceverai hanno già una proprietà “completed” che può essere true o false
+const createList = (parent, userId, id, title) => {
+  
+    const listItemEl = newEl("li");
+  listItemEl.className = "listItemEl";
 
-// Layout
-//  prenotazioni ancora da gestire (completed=== false);  “Prenotazioni in attesa”.
-// lista delle visite concluse (completed === true); “Visite completate”.
+  listItemEl.append(userId, id, title);
+  parent.appendChild(listItemEl);
+};
 
-// Il cliente ci ha richiesto anche questa cosa ma cerchiamo di capire se possiamo farla:
-// ● Bisognerebbe aggiungere un piccolo form dove poter inserire una nuova
-// prenotazione. I campi di questo form saranno gli stessi che vengono restituiti da ogni singolo oggetto contenuto nell’array restituito dalla chiamata a “todos”
+const pendingBookings = q(".pending-list");
+const completedBookings = q(".completed-list");
 
-// const BASE_URL= "https://jsonplaceholder.typicode.com/todos";
+const BASE_URL = "https://jsonplaceholder.typicode.com/todos";
 
-// fetch("https://jsonplaceholder.typicode.com/todos")
+fetch(BASE_URL)
+  .then((res) => res.json())
+  .then((data) => {
+    data
+      .filter((data) => data.completed === false)
+      .map((data) =>
+        createList(pendingBookings, data.userId, data.id, data.title));
+
+    data
+      .filter((data) => data.completed === true)
+      .map((data) =>
+        createList(completedBookings, data.userId, data.id, data.title));
+  });
