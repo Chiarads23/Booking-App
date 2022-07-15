@@ -1,5 +1,3 @@
-// ● Bisognerebbe aggiungere un piccolo form dove poter inserire una nuova prenotazione. I campi di questo form saranno gli stessi che vengono restituiti da ogni singolo oggetto contenuto nell’array restituito dalla chiamata a “todos”
-
 const BASE_URL = "https://jsonplaceholder.typicode.com/todos";
 
 const newEl = (el) => document.createElement(el);
@@ -21,7 +19,6 @@ const createList = (parent, userId, id, title) => {
   const userIdEl = newEl("p");
   const idEl = newEl("p");
   const titleEl = newEl("p");
-  // const horLine = newEl("hr");
 
   listItemEl.className = "listItemEl";
 
@@ -39,10 +36,9 @@ fetch(BASE_URL)
     data
       .filter((data) => data.completed === false)
       .reverse()
-      .map((data) =>
-        createList(pendingBookings, data.userId, data.id, data.title)
-      );
-
+      .map((data) => {
+        createList(pendingBookings, data.userId, data.id, data.title);
+      });
     data
       .filter((data) => data.completed === true)
       .map((data) =>
@@ -75,28 +71,19 @@ titleInputEl.addEventListener("input", (e) => {
   inputsData.title = e.target.value;
 });
 
+//----avrei voluto che i dati inseriti nella nuova prenotazione fossero visibili nella lista "prenotazioni in attesa", ma non sono riuscita----------------
+
 btnEl.addEventListener("click", (e) => {
+  document.getElementsByClassName("listItemEl")
   POST(BASE_URL, inputsData)
-  e.preventDefault()
-  console.log(inputsData)
-   .then(() => listItemEl.forEach(data => data.remove())) 
+    .then(() => listItemEl.forEach((data) => data.remove()))
     .then(() =>
-      GET(BASE_URL).then(pendingBookings => {
-        pendingBookings.reverse().map(({userId, id, title}) =>
+      GET(BASE_URL).then((pendingBookings) => {
+        pendingBookings
+          .reverse()
+          .map(({ userId, id, title }) =>
             createList(pendingBookings, userId, id, title)
           );
-      })  
+      })
     );
 });
-
-// btnEl.addEventListener('click', (e) =>{
-//   e.preventDefault();
-//   console.log(inputsData)
-//  POST(BASE_URL,inputsData)
-//  .then(()=>location.reload());
-// })
-
-// btnEl.addEventListener('click', () =>)
-// inputEls.forEach(input => input.addEventListener('input',(e)=>{
-//   inputsData[input.id] = e.target.value;
-// }));
